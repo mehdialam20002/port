@@ -1,8 +1,21 @@
-import React from 'react'
+import React,{useRef} from 'react'
+import emailjs from '@emailjs/browser';
 import "./contact.css"
 const Contact = () => {
-  return (
+    const form=useRef();
+    const sendEmail=(e)=>{
+        e.preventDefault();
+        emailjs.sendForm('service_yw40n5l','template_8dcr67q', form.current,'pIWjxYq9CMGVlQqDB')
+        .then((result)=>{
+            console.log(result.text);
+            alert("Message sent Successfully")
 
+        },(error)=>{
+            console.log(error.text);
+        });
+    }
+  return (
+    
     <section className="contact section" id='contact'>
         <h2 className="section_title">Get in touch</h2>
         <span className="section_subtitle">Contact Me</span>
@@ -36,34 +49,30 @@ const Contact = () => {
             <div className="contact_content">
                 <h3 className="contact_title">Write me yout project</h3>
 
-            <form method='POST' action="" className="contact_form">
 
 
+
+
+<form ref={form} onSubmit={sendEmail} className="contact_form">
 <div className="contact_form-div">
     <label htmlFor="" className="contact_form-tag">Name</label>
-    <input type="text" name='name'
+    <input type="text" name='from_name'
     placeholder='your Name' className="contact_form-input" />
 </div>
 
-
-
-
-
 <div className="contact_form-div">
     <label htmlFor="" className="contact_form-tag">Mail</label>
-    <input type="email" name='email'
+    <input type="email" name='from_email'
     placeholder='your email' className="contact_form-input" />
 </div>
 
-
-
 <div className="contact_form-area contact_form-div">
-    <label htmlFor="" className="contact_form-tag">Project</label>
-    <textarea type="text" name='content' cols="30" rows="10"
+    <label htmlFor="" className="contact_form-tag">Message</label>
+    <textarea type="text" name='message' cols="30" rows="10"
     placeholder='Write your Project' className="contact_form-input" />
 </div>
 
-<button className="button button--flex" onClick="document.getElementById('contact-form').submit();">Send Message</button>
+<button type='submit'   className="button button--flex" >Send Message</button>
 
 
             </form>
